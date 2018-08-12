@@ -1,4 +1,4 @@
-#tjctf 2018
+#tjctf_2018
 - [crypto](#crypto)
 	- [Permutations](#permutations)
 	- [affine](#affine)
