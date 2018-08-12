@@ -1,7 +1,7 @@
 #tjctf 2018
 - [crypto](#crypto)
 	- [Permutations](#permutations)
-	- [affine] (#affine)
+	- [affine](#affine)
 ## crypto
 ### Permutations
 This is a normal RC4, we can send 10 bytes mask "abcdefghij"   permutations to the server, and the server will map the mask to message and then encrypt the message every time with RC4 and urandom(16) keys.
