@@ -1,6 +1,7 @@
 #tjctf 2018
 - [crypto](#crypto)
 	- [Permutations](#permutations)
+	- [affine] (#affine)
 ## crypto
 ### Permutations
 This is a normal RC4, we can send 10 bytes mask "abcdefghij"   permutations to the server, and the server will map the mask to message and then encrypt the message every time with RC4 and urandom(16) keys.
@@ -77,3 +78,7 @@ print sorted(out.items(),key = lambda item:item[1])
 #tjctf{ohbyteRC4!}
 ```
 flag:tjctf{ohbyteRC4!}
+
+### affine
+Håstad’s Broadcast Attack with linear padding
+reference:http://duksctf.github.io/2017/04/22/PCTF2017-Multicast.html
