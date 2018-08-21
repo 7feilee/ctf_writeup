@@ -1,1 +1,1 @@
-# ctf_writeup
+# writeup for some of the challenges
