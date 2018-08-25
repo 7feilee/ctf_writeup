@@ -460,6 +460,7 @@ Out[92]: 'e you ever see something weird ?'
 ```
 $$shitty\_hash(x_1,x_2,...,x_n) = h_0g^n+x_1g^n+x_2g^{n-1}+...+x_ng \ mod  \ 2^{256}$$
 为了找到hash值相同的两个message,我们需要找到$a_1g^n+a_2g^{n-1}+...+a_ng \ mod  \ 2^{256}$和$b_1g^n+b_2g^{n-1}+...+b_ng \ mod  \ 2^{256}$的两个线性组合. $\{a_1,...,a_n\}$和$\{b_1,...,b_n\}$为两个message, 并且$a_i$和$b_i$属于$\{0,...,255\}$,我们可以假设m1固定, 则找到一组$c_1g^n+c_2g^{n-1}+...+c_ng \ mod  \ 2^{256} = 0$ 则可以找到m2, $b_i = a_i+c_i$, 其中$a_i$已知(m1固定),则$c_i$的范围为$0<=a_i+c_i<=255$并且为整数.从而得到hash碰撞. 为了找到这样的一组满足条件的$c_i$,其中$c_i$都很小,我想到了用[LLL算法](https://en.wikipedia.org/wiki/Lenstra%E2%80%93Lenstra%E2%80%93Lov%C3%A1sz_lattice_basis_reduction_algorithm)解决[SVP](https://en.wikipedia.org/wiki/Lattice_problem)问题.
+[矩阵构造参考](https://www.di.ens.fr/~granboul/recherche/publications/data/hash.pdf)
 构造矩阵如下
 $$
         \begin{matrix}
