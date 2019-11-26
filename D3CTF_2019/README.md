@@ -386,3 +386,35 @@ sage: long_to_bytes(_)
 b'y0u~h@VE~lE4RNeD-NUMber-tHE0Ry'
 ```
 
+## noise
+
+> solved by [zzh](https://github.com/zzh1996)
+
+```python
+from pwn import *
+
+re = remote('129.226.75.200', 20751)
+
+re.recvuntil('get it...\n')
+
+def oracle(num):
+    re.sendline('god')
+    re.sendline(str(num))
+    return int(re.recvline())
+
+lower = None
+upper = 2**1024
+k = 1
+while True:
+    r = oracle(k * upper)
+    lower = upper - r // k
+    upper = upper - (r-2**1000) // k
+    # assert lower <= secret <= upper
+    print(int(upper-lower).bit_length())
+    k *= 2**23
+    if k > 2**1024:
+        break
+re.sendline('bless')
+re.sendline(str(lower))
+re.interactive()
+```
