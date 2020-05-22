@@ -38,6 +38,7 @@ cts = enc(flag)
 r = 4
 decrypt = b""
 x = var('x')
+X = GF(2).polynomial_ring().gen()
 for ct in cts:
     p = (1<<r*8) + 0x8025
     r*=2
