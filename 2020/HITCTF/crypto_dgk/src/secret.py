@@ -1,0 +1,1 @@
+FLAG = b"HITCTF2020{Do_you_know_dgk_cryptosystem_is_very_efficient_in_MPC_Q@Q###}"
