@@ -15,4 +15,4 @@ for k in range(1,100):
         comm = lcm(a_i,b_i)
         a_out,b_out,c_out = a*comm,b*comm,comm
         assert a_out/(b_out+c_out) + b_out/(a_out+c_out) + c_out/(a_out+b_out) == n
-        breaks
+        break
